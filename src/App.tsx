@@ -34,37 +34,60 @@ export default function App() {
               r.map((c, j) => (i === row && j === col ? "orange" : c))
             )
           );
-        }, index * 300);
+        }, index * 100);
       }
     );
   };
 
   return (
-    <div className="grid grid-cols-3 mx-auto mt-32 gap-2 w-40">
-      {matrix.map((row, i) =>
-        row.map((color, j) => (
-          <div
-            key={`${i}-${j}`}
-            onClick={() => handleClick(i, j)}
-            className={cn(
-              "w-12 h-12 border flex items-center shadow-inner justify-center cursor-pointer",
-              i === 0 && j === 0 && "rounded-tl-lg",
-              i === 0 && j === 2 && "rounded-tr-lg",
-              i === 2 && j === 0 && "rounded-bl-lg",
-              i === 2 && j === 2 && "rounded-br-lg",
-              i === 0 && "border-b-0",
-              i === 2 && "border-t-0",
-              j === 0 && "border-r-0",
-              j === 2 && "border-l-0",
-              color === "green" && "bg-green-500",
-              color === "orange" && "bg-orange-500",
-              color === "white" && "bg-white",
-              color === "white" && "hover:bg-gray-200"
-            )}
-            // style={{ backgroundColor: color }}
-          />
-        ))
-      )}
+    <div className="flex flex-col items-center gap-4">
+      <div className="grid grid-cols-3 mx-auto mt-32 gap-2 w-40">
+        {matrix.map((row, i) =>
+          row.map((color, j) => (
+            <div
+              key={`${i}-${j}`}
+              onClick={() => handleClick(i, j)}
+              className={cn(
+                "w-12 h-12 border flex items-center shadow-inner justify-center cursor-pointer",
+                i === 0 && j === 0 && "rounded-tl-lg",
+                i === 0 && j === 2 && "rounded-tr-lg",
+                i === 2 && j === 0 && "rounded-bl-lg",
+                i === 2 && j === 2 && "rounded-br-lg",
+                i === 0 && "border-b-0",
+                i === 2 && "border-t-0",
+                j === 0 && "border-r-0",
+                j === 2 && "border-l-0",
+                color === "green" && "bg-green-500",
+                color === "orange" && "bg-orange-500",
+                color === "white" && "bg-white",
+                color === "white" && "hover:bg-gray-200"
+              )}
+            />
+          ))
+        )}
+      </div>
+      <div className="text-center">
+        {clickOrder.length === 9 ? (
+          <div className="flex flex-col gap-2">
+            <span>Bingo</span>
+            <button
+              onClick={() => {
+                setClickOrder([]);
+                setMatrix(
+                  Array(3)
+                    .fill(null)
+                    .map(() => Array(3).fill("white"))
+                );
+              }}
+              className="border-[#004733] hover:bg-[#00473320] border-2 transition-all text-[#004733] rounded-full px-10 py-2"
+            >
+              Reset
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 }
