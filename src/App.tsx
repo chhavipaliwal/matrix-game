@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { cn } from "./lib/utils";
 
 export default function App() {
   const [matrix, setMatrix] = useState(
@@ -39,14 +40,28 @@ export default function App() {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-2 w-40">
+    <div className="grid grid-cols-3 mx-auto mt-32 gap-2 w-40">
       {matrix.map((row, i) =>
         row.map((color, j) => (
           <div
             key={`${i}-${j}`}
             onClick={() => handleClick(i, j)}
-            className="w-12 h-12 border flex items-center justify-center cursor-pointer"
-            style={{ backgroundColor: color }}
+            className={cn(
+              "w-12 h-12 border flex items-center shadow-inner justify-center cursor-pointer",
+              i === 0 && j === 0 && "rounded-tl-lg",
+              i === 0 && j === 2 && "rounded-tr-lg",
+              i === 2 && j === 0 && "rounded-bl-lg",
+              i === 2 && j === 2 && "rounded-br-lg",
+              i === 0 && "border-b-0",
+              i === 2 && "border-t-0",
+              j === 0 && "border-r-0",
+              j === 2 && "border-l-0",
+              color === "green" && "bg-green-500",
+              color === "orange" && "bg-orange-500",
+              color === "white" && "bg-white",
+              color === "white" && "hover:bg-gray-200"
+            )}
+            // style={{ backgroundColor: color }}
           />
         ))
       )}
